@@ -20,7 +20,7 @@ public:
 };
 
 
-Image ShowGrayScaleImage(const Image& input_image) {
+Image ConvertToGrayScale(const Image& input_image) {
     Image gray(input_image.w, input_image.h, 1);
 
     for (int i = 0; i < input_image.h; i++) {
@@ -68,9 +68,47 @@ Image ConvertToImage(Mat img) {
     return image;
 }
 
+Image ComputeGradient(const Image& gray_image) {
+    Image gradient(gray_image.w, gray_image.h, 1);
+
+    int sobel_x[3][3] = {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
+
+    int sobel_y[3][3] = {
+        {-1, -2, -1},
+        {0, 0, 0},
+        {1, 2, 1}
+
+    };
+
+    for (int y = 1; y < gray_image.h - 1; y++) {
+        for (int x = 1; x < gray_image.w - 1; x++) {
+            int gx = 0, gy = 0;
+            
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    int pixel = gray_image.data[(y + i) * gray_image.w + (x + j)];
+                    gx += pixel * sobel_x[i + 1][j + 1];
+                    gy += pixel * sobel_y[i + 1][j + 1];
+                }
+            }
+
+            int magnitude = sqrt(gx * gx + gy * gy);
+            magnitude = min(255, magnitude); // aşırı değerleri kırp
+
+            gradient.data[y * gray_image.w + x] = magnitude;
+        }
+    }
+    
+    return gradient;
+}
+
 int main()
 {
-    string image_path = "C:/Users/mefat/OneDrive/Masaüstü/ImageProcessing0.1/LineCircleDetection/image1.jpg";
+    string image_path = "C:/Users/mefat/OneDrive/Masaüstü/ImageProcessing0.1/LineCircleDetection/image.jpg";
     Mat image = imread(image_path, IMREAD_COLOR);
     if (image.empty()) {
         cerr << "Görüntü Yüklenemedi!" << endl;
@@ -78,12 +116,14 @@ int main()
     }
     // OpenCV Mat -> Kendi Image sınıfımıza aktarım ve BGR to RGB
     Image new_image = ConvertToImage(image);
-    Image gray_scale_img = ShowGrayScaleImage(new_image);
+    Image gray_scale_img = ConvertToGrayScale(new_image);
     Image binary_img = ConvertToBinary(gray_scale_img);
+    Image gradient_img = ComputeGradient(gray_scale_img);
+
 
     imshow("Original Image", image);
     imshow("Gray Scaled Image", ConvertToMat(gray_scale_img));
-    imshow("Binary Image", ConvertToMat(binary_img));
+    imshow("Gradient Computed Image", ConvertToMat(gradient_img));
     waitKey(0);
 
 }
