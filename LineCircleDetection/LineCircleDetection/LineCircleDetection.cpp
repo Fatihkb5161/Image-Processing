@@ -1,5 +1,7 @@
 ﻿#include <iostream>
 #include <opencv2/opencv.hpp>
+#include <cmath>
+#include <map>
 
 using namespace cv;
 using namespace std;
@@ -182,9 +184,43 @@ Image NonMaximumSupression(const Image& gradient_image) {
     return result;
 }
 
+Image HysteresisThreshold(const Image& nms_img, int low_thresh = 50, int high_thresh = 100) {
+    Image result(nms_img.w, nms_img.h, 1);
+
+    for (int y = 1; y < nms_img.h - 1; y++) {
+        for (int x = 1; x < nms_img.w - 1; x++) {
+            int idx = y * nms_img.w + x;
+            int val = nms_img.data[idx];
+
+            if (val >= high_thresh) {
+                result.data[idx] = 255; // güçlü kenar
+            }
+            else if (val >= low_thresh) {
+                // 8 komşusuna bak, biri güçlü kenar mı?
+                bool connected_to_strong = false;
+                for (int dy = -1; dy <= 1; dy++) {
+                    for (int dx = -1; dx <= 1; dx++) {
+                        if (dy == 0 && dx == 0) continue;
+                        int n_idx = (y + dy) * nms_img.w + (x + dx);
+                        if (nms_img.data[n_idx] >= high_thresh) {
+                            connected_to_strong = true;
+                        }
+                    }
+                }
+                result.data[idx] = connected_to_strong ? 255 : 0;
+            }
+
+            else {
+                result.data[idx] = 0;
+            }
+        }
+    }
+    return result;
+}
+
 int main()
 {
-    string image_path = "C:/Users/mefat/OneDrive/Masaüstü/ImageProcessing0.1/LineCircleDetection/image5.jpg";
+    string image_path = "C:/Users/mefat/OneDrive/Masaüstü/ImageProcessing0.1/LineCircleDetection/image1.jpg";
     Mat image = imread(image_path, IMREAD_COLOR);
     if (image.empty()) {
         cerr << "Görüntü Yüklenemedi!" << endl;
@@ -196,11 +232,13 @@ int main()
     Image binary_img = ConvertToBinary(gray_scale_img);
     Image gradient_img = ComputeGradient(gray_scale_img);
     Image NMS_img = NonMaximumSupression(gradient_img);
+    Image hysteresis_img = HysteresisThreshold(NMS_img);
 
     imshow("Original Image", image);
     imshow("Gray Scaled Image", ConvertToMat(gray_scale_img));
     imshow("Gradient Computed Image", ConvertToMat(gradient_img));
     imshow("NMS Image", ConvertToMat(NMS_img));
+    imshow("Hysteresis_img", ConvertToMat(hysteresis_img));
     waitKey(0);
 
 }

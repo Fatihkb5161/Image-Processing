@@ -1,5 +1,5 @@
 ﻿  LineCircleDetection.cpp
-C:\Users\mefat\OneDrive\Masaüstü\ImageProcessing0.1\LineCircleDetection\LineCircleDetection\LineCircleDetection.cpp(32,67): warning C4244: '=': 'double' - 'unsigned char' dönüşümü; veri kaybı olabilir
-C:\Users\mefat\OneDrive\Masaüstü\ImageProcessing0.1\LineCircleDetection\LineCircleDetection\LineCircleDetection.cpp(110,27): warning C4244: 'başlatılıyor': 'double' - 'int' dönüşümü; veri kaybı olabilir
-C:\Users\mefat\OneDrive\Masaüstü\ImageProcessing0.1\LineCircleDetection\LineCircleDetection\LineCircleDetection.cpp(148,25): warning C4244: 'başlatılıyor': 'double' - 'float' dönüşümü; veri kaybı olabilir
+C:\Users\mefat\OneDrive\Masaüstü\ImageProcessing0.1\LineCircleDetection\LineCircleDetection\LineCircleDetection.cpp(34,67): warning C4244: '=': 'double' - 'unsigned char' dönüşümü; veri kaybı olabilir
+C:\Users\mefat\OneDrive\Masaüstü\ImageProcessing0.1\LineCircleDetection\LineCircleDetection\LineCircleDetection.cpp(112,27): warning C4244: 'başlatılıyor': 'double' - 'int' dönüşümü; veri kaybı olabilir
+C:\Users\mefat\OneDrive\Masaüstü\ImageProcessing0.1\LineCircleDetection\LineCircleDetection\LineCircleDetection.cpp(150,25): warning C4244: 'başlatılıyor': 'double' - 'float' dönüşümü; veri kaybı olabilir
   LineCircleDetection.vcxproj -> C:\Users\mefat\OneDrive\Masaüstü\ImageProcessing0.1\LineCircleDetection\x64\Debug\LineCircleDetection.exe
