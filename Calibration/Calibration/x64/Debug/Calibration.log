@@ -1,0 +1,5 @@
+﻿  Calibration.cpp
+C:\Users\mefat\OneDrive\Masaüstü\Görüntü İşleme Ödev\Calibration\Calibration\Calibration.cpp(52,67): warning C4244: '=': 'double' - 'unsigned char' dönüşümü; veri kaybı olabilir
+C:\Users\mefat\OneDrive\Masaüstü\Görüntü İşleme Ödev\Calibration\Calibration\Calibration.cpp(89,27): warning C4244: 'başlatılıyor': 'double' - 'int' dönüşümü; veri kaybı olabilir
+C:\Users\mefat\OneDrive\Masaüstü\Görüntü İşleme Ödev\Calibration\Calibration\Calibration.cpp(107,25): warning C4244: 'başlatılıyor': 'double' - 'float' dönüşümü; veri kaybı olabilir
+  Calibration.vcxproj -> C:\Users\mefat\OneDrive\Masaüstü\Görüntü İşleme Ödev\Calibration\x64\Debug\Calibration.exe
